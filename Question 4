@@ -1,0 +1,14 @@
+4) Restructure the schema (if necessary) to optimize the above queries (make the queries simpler, run faster, etc)
+Here much of restructuring is not necessarily required. But given that the prime intent of this schema would be calculating the scores of each student and attempt,
+a new table called 'Scores' may be created using the code: 
+
+CREATE TABLE scores as (	
+	SELECT 
+		userID, 
+		attempt, 
+		SUM(CASE WHEN iscorrect THEN 1 END) as score --scores for each attempt
+	FROM User_answers
+	GROUP BY userID, attempt
+);
+
+This table will help in accessing the score without further calculations while querying.
